@@ -645,22 +645,33 @@ init();
     window.matchMedia('(display-mode: standalone)').matches ||
     window.navigator.standalone === true;
 
+  // Kung na-install na dati (naka-tag sa browser storage), wag nang ipakita
+  const alreadyInstalled = localStorage.getItem('gaanday_installed') === 'true';
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if (!isStandalone) installBtn.hidden = false;
+    if (!isStandalone && !alreadyInstalled) installBtn.hidden = false;
   });
 
   installBtn.addEventListener('click', async () => {
     if (!deferredPrompt) return;
-    installBtn.hidden = true;
     deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+    const { outcome } = await deferredPrompt.userChoice;
     deferredPrompt = null;
+
+    if (outcome === 'accepted') {
+      // Mawawala lang yung button kapag talagang na-install
+      installBtn.hidden = true;
+      localStorage.setItem('gaanday_installed', 'true');
+    }
+    // Kung "dismissed" (kina-cancel), manatili yung button para masubukan ulit
   });
 
+  // Extra safety net: kapag na-detect ng browser na na-install na talaga
   window.addEventListener('appinstalled', () => {
     installBtn.hidden = true;
+    localStorage.setItem('gaanday_installed', 'true');
     deferredPrompt = null;
   });
 
