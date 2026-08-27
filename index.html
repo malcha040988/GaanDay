@@ -15,155 +15,183 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg-deep:#0F2620;
-    --bg-card:#163931;
-    --bg-card-hi:#1C453B;
-    --gold:#E8B94A;
-    --gold-dim:#B99236;
-    --coral:#F2705C;
-    --cream:#F3ECDD;
-    --muted:#8FA89C;
-    --line:rgba(243,236,221,0.10);
-  }
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  html,body{margin:0; padding:0; background:var(--bg-deep);}
-  body{
-    font-family:'Manrope', sans-serif;
-    color:var(--cream);
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:28px 18px;
-    background:
-      radial-gradient(circle at 15% -10%, rgba(232,185,74,0.18), transparent 45%),
-      radial-gradient(circle at 100% 10%, rgba(242,112,92,0.12), transparent 40%),
-      var(--bg-deep);
-  }
-  .app{
-    width:100%;
-    max-width:440px;
-  }
+:root{
+  --bg-deep:#0F2620;
+  --bg-card:#163931;
+  --bg-card-hi:#1C453B;
+  --gold:#E8B94A;
+  --gold-dim:#B99236;
+  --coral:#F2705C;
+  --cream:#F3ECDD;
+  --muted:#8FA89C;
+  --line:rgba(243,236,221,0.10);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0; background:var(--bg-deep);}
+body{
+  font-family:'Manrope', sans-serif;
+  color:var(--cream);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px 18px;
+  background:
+    radial-gradient(circle at 15% -10%, rgba(232,185,74,0.18), transparent 45%),
+    radial-gradient(circle at 100% 10%, rgba(242,112,92,0.12), transparent 40%),
+    var(--bg-deep);
+}
+.app{
+  width:100%;
+  max-width:440px;
+}
+header{
+  text-align:center;
+  margin-bottom:22px;
+}
+.greeting-eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 6px;
+}
+.greeting{
+  font-family:'Fraunces', serif;
+  font-size:24px;
+  font-weight:600;
+  margin:0 0 6px;
+  line-height:1.2;
+}
+.date-chip{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  color:var(--muted);
+  display:inline-block;
+  border:1px solid var(--line);
+  padding:5px 12px;
+  border-radius:100px;
+}
+.card{
+  background:linear-gradient(160deg, var(--bg-card-hi), var(--bg-card) 75%);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:34px 26px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"\201C";
+  position:absolute;
+  top:-10px;
+  left:14px;
+  font-family:'Fraunces', serif;
+  font-size:110px;
+  color:rgba(232,185,74,0.10);
+  line-height:1;
+  pointer-events:none;
+}
+.section-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 18px;
+}
+.affirmation-text{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-weight:500;
+  font-size:25px;
+  line-height:1.45;
+  margin:0 0 26px;
+  min-height:130px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:opacity 0.25s ease;
+  position:relative;
+}
+.affirmation-text.fade{ opacity:0; }
+.refresh-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:transparent;
+  border:1px solid var(--gold-dim);
+  color:var(--gold);
+  font-family:'Manrope', sans-serif;
+  font-weight:700;
+  font-size:13.5px;
+  padding:11px 20px;
+  border-radius:100px;
+  cursor:pointer;
+  transition:background 0.15s ease, transform 0.1s ease;
+}
+.refresh-btn:active{ transform:scale(0.96); }
+.refresh-btn:hover{ background:rgba(232,185,74,0.10); }
+.refresh-btn svg{ width:14px; height:14px; transition:transform 0.4s ease; }
+.refresh-btn.spin svg{ transform:rotate(180deg); }
+.streak{
+  text-align:center;
+  margin-top:16px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  color:var(--muted);
+}
 
-  header{
-    text-align:center;
-    margin-bottom:22px;
-  }
-  .greeting-eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin:0 0 6px;
-  }
-  .greeting{
-    font-family:'Fraunces', serif;
-    font-size:24px;
-    font-weight:600;
-    margin:0 0 6px;
-    line-height:1.2;
-  }
-  .date-chip{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:var(--muted);
-    display:inline-block;
-    border:1px solid var(--line);
-    padding:5px 12px;
-    border-radius:100px;
-  }
+/* ---- Install app button ---- */
+.install-wrap{
+  text-align:center;
+  margin-top:18px;
+}
+.install-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--gold);
+  border:1px solid var(--gold);
+  color:var(--bg-deep);
+  font-family:'Manrope', sans-serif;
+  font-weight:800;
+  font-size:13.5px;
+  padding:12px 22px;
+  border-radius:100px;
+  cursor:pointer;
+  transition:background 0.15s ease, transform 0.1s ease;
+}
+.install-btn:active{ transform:scale(0.96); }
+.install-btn:hover{ background:#f0c664; }
+.install-btn svg{ width:14px; height:14px; }
+.ios-hint{
+  font-family:'Manrope', sans-serif;
+  font-size:11.5px;
+  color:var(--muted);
+  max-width:320px;
+  margin:10px auto 0;
+  line-height:1.6;
+}
+.ios-hint b{ color:var(--cream); }
 
-  .card{
-    background:linear-gradient(160deg, var(--bg-card-hi), var(--bg-card) 75%);
-    border:1px solid var(--line);
-    border-radius:22px;
-    padding:34px 26px;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-  }
-  .card::before{
-    content:"“";
-    position:absolute;
-    top:-10px;
-    left:14px;
-    font-family:'Fraunces', serif;
-    font-size:110px;
-    color:rgba(232,185,74,0.10);
-    line-height:1;
-    pointer-events:none;
-  }
-  .section-label{
-    font-family:'JetBrains Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin:0 0 18px;
-  }
-  .affirmation-text{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:500;
-    font-size:25px;
-    line-height:1.45;
-    margin:0 0 26px;
-    min-height:130px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:opacity 0.25s ease;
-    position:relative;
-  }
-  .affirmation-text.fade{ opacity:0; }
-
-  .refresh-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:transparent;
-    border:1px solid var(--gold-dim);
-    color:var(--gold);
-    font-family:'Manrope', sans-serif;
-    font-weight:700;
-    font-size:13.5px;
-    padding:11px 20px;
-    border-radius:100px;
-    cursor:pointer;
-    transition:background 0.15s ease, transform 0.1s ease;
-  }
-  .refresh-btn:active{ transform:scale(0.96); }
-  .refresh-btn:hover{ background:rgba(232,185,74,0.10); }
-  .refresh-btn svg{ width:14px; height:14px; transition:transform 0.4s ease; }
-  .refresh-btn.spin svg{ transform:rotate(180deg); }
-
-  .streak{
-    text-align:center;
-    margin-top:16px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:var(--muted);
-  }
-
-  footer{
-    text-align:center;
-    padding:22px 12px 0;
-    color:var(--muted);
-    font-size:11.5px;
-    line-height:1.6;
-  }
-  footer b{ color:var(--cream); }
+footer{
+  text-align:center;
+  padding:22px 12px 0;
+  color:var(--muted);
+  font-size:11.5px;
+  line-height:1.6;
+}
+footer b{ color:var(--cream); }
 </style>
 </head>
 <body>
 <div class="app">
-
   <header>
     <p class="greeting-eyebrow" id="eyebrow">Hey, good day</p>
     <h1 class="greeting" id="greeting">Kumusta ka today?</h1>
-    <span class="date-chip" id="dateChip">—</span>
+    <span class="date-chip" id="dateChip">&mdash;</span>
   </header>
 
   <section class="card">
@@ -177,423 +205,471 @@
 
   <p class="streak" id="dayCount"></p>
 
+  <div class="install-wrap">
+    <button class="install-btn" id="installBtn" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+      I-install ang App
+    </button>
+    <p class="ios-hint" id="iosInstallHint" hidden>
+      Tap ang <b>Share</b> button sa Safari, tapos <b>Add to Home Screen</b>, para maging parang tunay na app ang GaanDay sa iPhone mo.
+    </p>
+  </div>
 </div>
 
 <script>
 (function(){
-  const AFFIRMATIONS = [
-    "Kaya ko harapin ang araw na 'to nang may confidence.",
-    "Kaya ko ayusin ang buhay ko, one step at a time.",
-    "Kaya ko itong bagong chapter, kahit scary.",
-    "Kaya ko mag-adjust sa mga pagbabago sa buhay ko.",
-    "Kaya ko protektahan ang peace of mind ko.",
-    "Kaya ko tapusin ang mga plano ko, dahan-dahan lang.",
-    "Kaya ko bumangon kahit mahirap ang lumipas na araw.",
-    "Kaya ko piliin ang sarili ko, walang guilt.",
-    "Kaya ko baguhin ang narrative ng buhay ko.",
-    "Kaya ko simulan ulit kahit ilang beses na.",
-    "Kaya ko manindigan para sa sarili ko.",
-    "Kaya ko i-set ang sariling pace ko.",
-    "Kaya ko mag-focus sa kung ano'ng mahalaga.",
-    "Kaya ko labanan ang self-doubt na 'to.",
-    "Kaya ko humingi ng tulong kung kailangan ko.",
-    "Kaya ko itong araw, kahit ayaw kong bumangon.",
-    "Kaya ko baguhin ang habits ko, unti-unti.",
-    "Kaya ko i-prioritize ang kalusugan ko.",
-    "Kaya ko sabihin ng \"hindi\" kapag kailangan.",
-    "Kaya ko lumaban para sa mga pangarap ko.",
-    "Kaya ko harapin ang uncertainty nang buong tapang.",
-    "Kaya ko magtiwala sa timing ng buhay ko.",
-    "Kaya ko i-celebrate ang maliliit na wins ko.",
-    "Kaya ko tumigil kapag kailangan ko ng rest.",
-    "Kaya ko harapin ang bukas, kahit hindi ko alam ang lahat.",
-    "Kaya ko i-forgive ang sarili ko sa mga past mistakes.",
-    "Kaya ko magsimula ulit, kahit gaano na karaming beses.",
-    "Kaya ko i-trust ang gut feeling ko.",
-    "Kaya ko tanggapin ang tulong mula sa iba.",
-    "Kaya ko harapin ang mga challenges na darating.",
-    "Deserve ko ng magandang buhay na pinaghihirapan ko.",
-    "Deserve ko ng peace, hindi lang chaos.",
-    "Deserve ko ng oras para sa sarili ko.",
-    "Deserve ko ng respeto, kahit kanino.",
-    "Deserve ko ng rest na walang guilt.",
-    "Deserve ko ng mga taong sumusuporta sa akin.",
-    "Deserve ko ng financial freedom sa future.",
-    "Deserve ko ng second chances kapag kailangan ko.",
-    "Deserve ko ng kindness, lalo na galing sa sarili ko.",
-    "Deserve ko ng buhay na aligned sa values ko.",
-    "Deserve ko ng celebration para sa progress ko.",
-    "Deserve ko ng boundaries na naka-respeto.",
-    "Deserve ko ng oras para lang mag-breathe.",
-    "Deserve ko ng magandang relasyon, romantic man o hindi.",
-    "Deserve ko ng career na fulfilling.",
-    "Deserve ko ng patience mula sa sarili ko.",
-    "Deserve ko ng magandang tulog kada gabi.",
-    "Deserve ko ng closure sa mga chapters na tapos na.",
-    "Deserve ko ng abundance, hindi lang sapat lang.",
-    "Deserve ko ng grace habang natututo ako.",
-    "Deserve ko ng mga taong nagpapasaya sa akin.",
-    "Deserve ko ng oras para gawin ang gusto ko.",
-    "Deserve ko ng stability, financial man o emotional.",
-    "Deserve ko ng buhay na hindi puro sakripisyo.",
-    "Deserve ko ng ngiti kahit sa mahirap na araw.",
-    "Deserve ko ng mga bagay na nagpapalago sa akin.",
-    "Deserve ko ng self-love, hindi self-criticism.",
-    "Deserve ko ng magandang bukas.",
-    "Deserve ko ng oras para mag-heal.",
-    "Deserve ko ng lahat ng pinaghihirapan ko.",
-    "I'm proud kasi hindi ako sumuko kahit mahirap.",
-    "I'm proud kasi tinuloy ko pa rin, kahit slow.",
-    "I'm proud kasi natutunan kong mag-alaga sa sarili ko.",
-    "I'm proud kasi lumaban ako para sa sarili ko.",
-    "I'm proud kasi may ginagawa ako para sa future ko.",
-    "I'm proud kasi hindi ko na kailangang maging perfect.",
-    "I'm proud kasi natutunan kong mag-set ng boundaries.",
-    "I'm proud kasi patuloy akong sumusubok.",
-    "I'm proud kasi hindi ako sumusuko kahit mahirap ang buhay.",
-    "I'm proud kasi naging honest ako sa sarili ko.",
-    "I'm proud kasi natutunan kong tumigil kapag kailangan.",
-    "I'm proud kasi lumago ako, kahit paano.",
-    "I'm proud kasi hindi ako naging katulad ng dati.",
-    "I'm proud kasi tinapos ko ang mga bagay na sinimulan ko.",
-    "I'm proud kasi patuloy akong nagtitipid.",
-    "I'm proud kasi hindi ako nag-give up sa sarili ko.",
-    "I'm proud kasi ginagawa ko ang best ko araw-araw.",
-    "I'm proud kasi natutunan kong magpahinga nang walang guilt.",
-    "I'm proud kasi hinarap ko ang takot ko.",
-    "I'm proud kasi hindi ako natatakot mag-simula ulit.",
-    "I'm proud kasi respected ko ang sarili kong pace.",
-    "I'm proud kasi hindi ako nagpadala sa comparison.",
-    "I'm proud kasi tinanggap ko ang tulong na inalok sa akin.",
-    "I'm proud kasi nakayanan ko ang mahirap na panahon.",
-    "I'm proud kasi patuloy akong naniniwala sa sarili ko.",
-    "I'm proud kasi ginawa ko ang tama, kahit mahirap.",
-    "I'm proud kasi hindi ko na kailangang i-prove ang sarili ko sa lahat.",
-    "I'm proud kasi mas kilala ko na ang sarili ko ngayon.",
-    "I'm proud kasi natutunan kong i-appreciate ang sarili ko.",
-    "I'm proud kasi buo pa rin ako kahit ano pa ang pinagdaanan ko.",
-    "Okay lang na mabagal, basta hindi tumitigil.",
-    "Okay lang na magkamali paminsan-minsan.",
-    "Okay lang na magpahinga nang walang guilt.",
-    "Okay lang na hindi lahat ng araw productive.",
-    "Okay lang na humingi ng tulong.",
-    "Okay lang na maiyak paminsan-minsan.",
-    "Okay lang na hindi pa alam ang lahat ng sagot.",
-    "Okay lang na iba ang bilis mo sa iba.",
-    "Okay lang na baguhin ang isip mo.",
-    "Okay lang na unahin ang sarili minsan.",
-    "Okay lang na hindi laging positive ang vibe.",
-    "Okay lang na magtanong kapag confused.",
-    "Okay lang na mag-set ng limits.",
-    "Okay lang na huminto muna, kahit sandali.",
-    "Okay lang na hindi perfect ang plano.",
-    "Okay lang na magpasalamat sa maliliit na bagay.",
-    "Okay lang na mag-focus sa isang bagay muna.",
-    "Okay lang na hindi kontento agad, basta consistent.",
-    "Okay lang na sumubok ulit kahit nabigo dati.",
-    "Okay lang na tumanggi kapag kailangan.",
-    "Okay lang na malito paminsan-minsan.",
-    "Okay lang na mag-take ng break.",
-    "Okay lang na hindi sabay-sabay ang lahat ng plano.",
-    "Okay lang na humiling ng suporta.",
-    "Okay lang na maging vulnerable minsan.",
-    "Okay lang na iba ang journey mo sa iba.",
-    "Okay lang na dahan-dahan ang healing.",
-    "Okay lang na hindi lahat kailangang ma-figure out ngayon.",
-    "Okay lang na magbago ang direksyon.",
-    "Okay lang na unahin ang mental health mo.",
-    "Reminder: ikaw din ay deserve ng magandang buhay.",
-    "Reminder: progress is progress, kahit maliit.",
-    "Reminder: hindi ka nag-iisa sa laban na 'to.",
-    "Reminder: okay lang huminga muna.",
-    "Reminder: mahalaga ang ginagawa mo, kahit hindi mo pa nakikita.",
-    "Reminder: hindi lahat kailangang perfect para maging maganda.",
-    "Reminder: ikaw ang bida ng sarili mong kwento.",
-    "Reminder: rest is productive too.",
-    "Reminder: bawat piso na naiipon mo, proof ng disiplina mo.",
-    "Reminder: kaya mo 'to, kahit hindi mo pa lubos na alam.",
-    "Reminder: hindi mo kailangang i-rush ang healing mo.",
-    "Reminder: proud ang past mo sa kung sino ka na ngayon.",
-    "Reminder: hindi mo kailangang gawin lahat mag-isa.",
-    "Reminder: bawat maliit na hakbang, patungo sa malaking goal.",
-    "Reminder: worthy ka ng magandang bagay, kahit anong araw ngayon.",
-    "Reminder: hindi ka laging kailangang may sagot.",
-    "Reminder: normal lang ang magdoubt paminsan-minsan.",
-    "Reminder: consistent beats perfect, palagi.",
-    "Reminder: ang tipid mo ngayon, love letter sa future mo.",
-    "Reminder: growing pa rin, and that's more than okay.",
-    "Reminder: hindi ka defined ng mga pagkakamali mo.",
-    "Reminder: allowed kang magpahinga.",
-    "Reminder: hindi mo kailangang i-prove sa lahat ang worth mo.",
-    "Reminder: may mga taong proud sa'yo, kahit hindi nila sinasabi.",
-    "Reminder: okay lang na mag-iba ang bilis mo.",
-    "Reminder: ang bawat araw, bagong chance para magsimula ulit.",
-    "Reminder: hindi ka kailangang maging katulad ng iba.",
-    "Reminder: your feelings are valid, kahit ano pa 'yan.",
-    "Reminder: hindi mo kailangang magmadali sa buhay.",
-    "Reminder: ikaw mismo ang unang taong dapat maniwala sa'yo.",
-    "Grateful ako sa bawat araw na nabibigyan ako ng chance.",
-    "Grateful ako sa mga leksyon na natutunan ko.",
-    "Grateful ako sa lakas na meron pa rin ako.",
-    "Grateful ako sa sarili kong hindi sumuko.",
-    "Grateful ako sa mga taong sumusuporta sa akin.",
-    "Grateful ako sa progress ko, kahit gaano kabagal.",
-    "Grateful ako sa health na meron ako ngayon.",
-    "Grateful ako sa mga oras na pwede kong pahingahin ang sarili ko.",
-    "Grateful ako sa mga bagay na natutunan ko sa mga mistakes ko.",
-    "Grateful ako sa journey ko, kahit mahirap.",
-    "Grateful ako sa bawat piso na naiipon ko.",
-    "Grateful ako sa growth na nakikita ko sa sarili ko.",
-    "Grateful ako sa mga simpleng bagay sa buhay ko.",
-    "Grateful ako sa lakas ng loob kong sumubok ulit.",
-    "Grateful ako sa sarili kong hindi tumigil.",
-    "Grateful ako sa mga bagong simula na binibigay ng buhay.",
-    "Grateful ako sa peace na unti-unti kong natatagpuan.",
-    "Grateful ako sa mga panahong nag-alala at nag-alaga ako sa sarili ko.",
-    "Grateful ako sa oras na meron pa rin ako.",
-    "Grateful ako sa lahat ng nangyari, maganda man o hindi.",
-    "Grateful ako sa sarili kong patuloy na sumusubok.",
-    "Grateful ako sa mga taong naniniwala sa akin.",
-    "Grateful ako sa bawat maliit na tagumpay ko.",
-    "Grateful ako sa sarili ko, kahit imperfect.",
-    "Grateful ako sa katatagan na hindi ko akalain meron ako.",
-    "Grateful ako sa mga bagay na natutunan ko about sa sarili ko.",
-    "Grateful ako sa pagbabago sa buhay ko.",
-    "Grateful ako sa mga bagong pagkakataon.",
-    "Grateful ako sa oras na binibigay ko sa sarili ko.",
-    "Grateful ako sa buhay na meron ako, ngayon mismo.",
-    "Malaya akong pumili ng mas mabuting desisyon araw-araw.",
-    "Malaya akong magbago ng direksyon kapag kailangan.",
-    "Malaya akong sabihin ng \"hindi\" nang walang guilt.",
-    "Malaya akong magpahinga kapag pagod na ako.",
-    "Malaya akong magtakda ng sariling pace.",
-    "Malaya akong lumayo sa mga bagay na nakakasira sa akin.",
-    "Malaya akong magsimula ulit anumang oras.",
-    "Malaya akong ipagpatuloy ang healing ko sa sarili kong bilis.",
-    "Malaya akong ipahayag kung paano ako talaga nararamdaman.",
-    "Malaya akong lumaban para sa mga gusto ko.",
-    "Malaya akong bumuo ng buhay na akin talaga.",
-    "Malaya akong tumigil kapag kailangan ko.",
-    "Malaya akong maging honest sa sarili ko.",
-    "Malaya akong sumubok nang hindi natatakot magkamali.",
-    "Malaya akong pumili kung sino ang bibigyan ko ng oras.",
-    "Malaya akong magpahalaga sa sarili kong journey.",
-    "Malaya akong lumago sa sarili kong bilis.",
-    "Malaya akong magtanong ng tulong.",
-    "Malaya akong i-prioritize ang mental health ko.",
-    "Malaya akong tumigil sa comparison sa iba.",
-    "Malaya akong ituloy ang mga pangarap ko.",
-    "Malaya akong baguhin ang paraan ng pag-iisip ko.",
-    "Malaya akong maniwala sa sarili ko.",
-    "Malaya akong ayusin ang buhay ko nang tahimik.",
-    "Malaya akong maging kung sino talaga ako.",
-    "Malaya akong pumili ng peace over drama.",
-    "Malaya akong iwan ang mga bagay na hindi na akin.",
-    "Malaya akong maging patient sa sarili kong proseso.",
-    "Malaya akong magpasalamat sa bawat hakbang.",
-    "Malaya akong tumingin sa future nang may pag-asa.",
-    "Believe ako na may magandang nakalaan para sa akin.",
-    "Believe ako na kaya kong ayusin ang buhay ko.",
-    "Believe ako na tama ang timing ng lahat.",
-    "Believe ako na lalago ako kahit paano.",
-    "Believe ako na deserve ko ang magandang buhay.",
-    "Believe ako na hindi ako nag-iisa sa laban na 'to.",
-    "Believe ako na magbabago ang mga bagay para sa mas mabuti.",
-    "Believe ako na kaya kong harapin ang kahit anong pagsubok.",
-    "Believe ako na worthy ako ng pagmamahal.",
-    "Believe ako na progress ko, sapat na.",
-    "Believe ako na hindi ako defined ng past ko.",
-    "Believe ako na may layunin ang lahat ng nangyayari.",
-    "Believe ako na kaya kong tapusin ang mga plano ko.",
-    "Believe ako na darating din ang tamang panahon.",
-    "Believe ako na naiipon ang bawat maliit na sakripisyo ko.",
-    "Believe ako na hindi masyadong huli para magbago.",
-    "Believe ako na magiging okay ang lahat.",
-    "Believe ako na mas malakas ako kaysa sa iniisip ko.",
-    "Believe ako na kaya kong i-trust ang proseso.",
-    "Believe ako na deserve ko ang kapayapaan.",
-    "Believe ako na patuloy akong lumalago, kahit hindi ko nakikita.",
-    "Believe ako na may nakalaan na maganda para sa akin.",
-    "Believe ako na hindi ako kulang sa kahit ano.",
-    "Believe ako na kaya kong i-heal ang sarili ko.",
-    "Believe ako na may value ang bawat hakbang ko.",
-    "Believe ako na magiging proud ako sa sarili ko balang araw.",
-    "Believe ako na tama ang direksyon ko, kahit slow.",
-    "Believe ako na deserve ko ang mga bagay na pinapangarap ko.",
-    "Believe ako na hindi ako kailanman nag-iisa.",
-    "Believe ako na kaya kong maging okay, isang araw sa isang pagkakataon.",
-    "Every day, lumalapit ako sa bersyon ng sarili kong gusto ko maging.",
-    "Every day, may chance akong magsimula ulit.",
-    "Every day, lumalago ako kahit hindi ko namamalayan.",
-    "Every day, may nadadagdag na lakas ako.",
-    "Every day, choose ko ang sarili ko.",
-    "Every day, lumalapit ako sa goals ko.",
-    "Every day, natututo ako ng bago tungkol sa sarili ko.",
-    "Every day, may dahilan akong magpasalamat.",
-    "Every day, mas kilala ko ang sarili ko.",
-    "Every day, lumalakas ang tiwala ko sa sarili ko.",
-    "Every day, may progress kahit maliit.",
-    "Every day, natututo akong magmahal sa sarili ko nang mas mabuti.",
-    "Every day, mas malapit ako sa peace na hinahanap ko.",
-    "Every day, may bagong pagkakataong bumuti.",
-    "Every day, mas malakas ako kaysa kahapon.",
-    "Every day, natututo akong tumigil kapag kailangan.",
-    "Every day, choose ko ang healing over hurting.",
-    "Every day, mas kumpiyansa ako sa desisyon ko.",
-    "Every day, may space ako para sa growth.",
-    "Every day, natutunan kong pahalagahan ang sarili ko.",
-    "Every day, lumalayo ako sa mga bagay na hindi na akin.",
-    "Every day, may bagong dahilan akong magpatuloy.",
-    "Every day, unti-unting natatapos ang mga takot ko.",
-    "Every day, mas malinaw ang direksyon ko.",
-    "Every day, natututo akong maging patient sa sarili ko.",
-    "Every day, mas gaan ang pakiramdam ko sa sarili ko.",
-    "Every day, may bagong bersyon ako ng sarili ko.",
-    "Every day, choose ko ang pag-asa kaysa takot.",
-    "Every day, mas malapit ako sa buhay na gusto ko.",
-    "Every day, may reason akong ipagpatuloy.",
-    "Trust the process — hindi lahat kailangang mangyari ngayon.",
-    "Trust the process — may layunin ang bawat hakbang.",
-    "Trust the process — kahit mabagal, tuloy pa rin.",
-    "Trust the process — hindi ka late, tama lang ang timing mo.",
-    "Trust the process — lalago ka sa sarili mong bilis.",
-    "Trust the process — kahit hindi mo pa nakikita, may nangyayari.",
-    "Trust the process — bawat challenge, may aral.",
-    "Trust the process — okay lang na malito paminsan-minsan.",
-    "Trust the process — hindi lahat linear, at okay lang 'yon.",
-    "Trust the process — may plano ang buhay para sa'yo.",
-    "Trust the process — patuloy kang lumalago kahit hindi mo napapansin.",
-    "Trust the process — hindi porket mabagal, hindi na gumagalaw.",
-    "Trust the process — worth it 'yong hirap ngayon.",
-    "Trust the process — kaya mong harapin ang susunod na chapter.",
-    "Trust the process — nasa tamang direksyon ka.",
-    "Trust the process — hindi mawawala ang effort mo.",
-    "Trust the process — lahat 'to, parte ng journey mo.",
-    "Trust the process — may magandang darating.",
-    "Trust the process — hindi ka nag-iisa dito.",
-    "Trust the process — kaya mo 'to, isang araw sa isang pagkakataon.",
-    "Trust the process — mas malapit ka na kaysa sa iniisip mo.",
-    "Trust the process — okay lang mag-doubt, basta huwag tumigil.",
-    "Trust the process — patunay ang lahat ng hirap mo ngayon.",
-    "Trust the process — may reason lahat ng nangyayari.",
-    "Trust the process — magiging okay din lahat.",
-    "Trust the process — mas magiging malinaw ang lahat, in time.",
-    "Trust the process — hindi ka pababayaan ng effort mo.",
-    "Trust the process — bawat hakbang, mahalaga.",
-    "Trust the process — lumalapit ka sa sarili mong ideal.",
-    "Trust the process — magiging worth it ang lahat ng 'to.",
-    "Proud of myself for showing up, kahit mahirap.",
-    "Proud of myself for not giving up sa sarili ko.",
-    "Proud of myself for choosing rest kapag kailangan.",
-    "Proud of myself for setting boundaries.",
-    "Proud of myself for staying consistent.",
-    "Proud of myself for asking for help.",
-    "Proud of myself for saving even a little today.",
-    "Proud of myself for trying again.",
-    "Proud of myself for being honest sa sarili ko.",
-    "Proud of myself for growing, kahit slow.",
-    "Proud of myself for choosing myself today.",
-    "Proud of myself for facing my fears.",
-    "Proud of myself for healing at my own pace.",
-    "Proud of myself for not comparing myself sa iba.",
-    "Proud of myself for staying kind sa sarili ko.",
-    "Proud of myself for making it this far.",
-    "Proud of myself for believing in myself today.",
-    "Proud of myself for taking care of my mental health.",
-    "Proud of myself for being patient sa sarili ko.",
-    "Proud of myself for finishing what I started.",
-    "Proud of myself for choosing peace over chaos.",
-    "Proud of myself for learning from my mistakes.",
-    "Proud of myself for staying true to myself.",
-    "Proud of myself for getting through today.",
-    "Proud of myself for not quitting.",
-    "Proud of myself for growing every single day.",
-    "Proud of myself for taking small steps forward.",
-    "Proud of myself for showing myself grace.",
-    "Proud of myself for prioritizing myself.",
-    "Proud of myself for believing na magiging okay ang lahat.",
-    "Today, choose to be kind sa sarili ko.",
-    "Today, choose to trust the process.",
-    "Today, choose to rest without guilt.",
-    "Today, choose to focus sa progress ko, hindi sa perfection.",
-    "Today, choose to let go ng mga hindi ko na kaya.",
-    "Today, choose to believe sa sarili ko.",
-    "Today, choose to prioritize peace.",
-    "Today, choose to celebrate small wins.",
-    "Today, choose to be honest sa sarili ko.",
-    "Today, choose to show up, kahit paano.",
-    "Today, choose to be patient sa sarili ko.",
-    "Today, choose to protect my energy.",
-    "Today, choose to grow, kahit konti lang.",
-    "Today, choose to forgive myself.",
-    "Today, choose to move forward, isang hakbang lang.",
-    "Today, choose to appreciate kung ano meron ako.",
-    "Today, choose to speak kindly sa sarili ko.",
-    "Today, choose to take it slow.",
-    "Today, choose to believe na kaya ko 'to.",
-    "Today, choose to set boundaries na kailangan ko.",
-    "Today, choose to invest sa sarili ko.",
-    "Today, choose to breathe through the hard parts.",
-    "Today, choose to trust my own timing.",
-    "Today, choose to be proud of how far I've come.",
-    "Today, choose to keep going.",
-    "Today, choose to embrace the uncertainty.",
-    "Today, choose to be gentle sa sarili ko.",
-    "Today, choose to focus on what I can control.",
-    "Today, choose to show up for myself.",
-    "Today, choose to hope for something better."
-  ];
+const AFFIRMATIONS = [
+"Kaya ko harapin ang araw na 'to nang may confidence.",
+"Kaya ko ayusin ang buhay ko, one step at a time.",
+"Kaya ko itong bagong chapter, kahit scary.",
+"Kaya ko mag-adjust sa mga pagbabago sa buhay ko.",
+"Kaya ko protektahan ang peace of mind ko.",
+"Kaya ko tapusin ang mga plano ko, dahan-dahan lang.",
+"Kaya ko bumangon kahit mahirap ang lumipas na araw.",
+"Kaya ko piliin ang sarili ko, walang guilt.",
+"Kaya ko baguhin ang narrative ng buhay ko.",
+"Kaya ko simulan ulit kahit ilang beses na.",
+"Kaya ko manindigan para sa sarili ko.",
+"Kaya ko i-set ang sariling pace ko.",
+"Kaya ko mag-focus sa kung ano'ng mahalaga.",
+"Kaya ko labanan ang self-doubt na 'to.",
+"Kaya ko humingi ng tulong kung kailangan ko.",
+"Kaya ko itong araw, kahit ayaw kong bumangon.",
+"Kaya ko baguhin ang habits ko, unti-unti.",
+"Kaya ko i-prioritize ang kalusugan ko.",
+"Kaya ko sabihin ng \"hindi\" kapag kailangan.",
+"Kaya ko lumaban para sa mga pangarap ko.",
+"Kaya ko harapin ang uncertainty nang buong tapang.",
+"Kaya ko magtiwala sa timing ng buhay ko.",
+"Kaya ko i-celebrate ang maliliit na wins ko.",
+"Kaya ko tumigil kapag kailangan ko ng rest.",
+"Kaya ko harapin ang bukas, kahit hindi ko alam ang lahat.",
+"Kaya ko i-forgive ang sarili ko sa mga past mistakes.",
+"Kaya ko magsimula ulit, kahit gaano na karaming beses.",
+"Kaya ko i-trust ang gut feeling ko.",
+"Kaya ko tanggapin ang tulong mula sa iba.",
+"Kaya ko harapin ang mga challenges na darating.",
+"Deserve ko ng magandang buhay na pinaghihirapan ko.",
+"Deserve ko ng peace, hindi lang chaos.",
+"Deserve ko ng oras para sa sarili ko.",
+"Deserve ko ng respeto, kahit kanino.",
+"Deserve ko ng rest na walang guilt.",
+"Deserve ko ng mga taong sumusuporta sa akin.",
+"Deserve ko ng financial freedom sa future.",
+"Deserve ko ng second chances kapag kailangan ko.",
+"Deserve ko ng kindness, lalo na galing sa sarili ko.",
+"Deserve ko ng buhay na aligned sa values ko.",
+"Deserve ko ng celebration para sa progress ko.",
+"Deserve ko ng boundaries na naka-respeto.",
+"Deserve ko ng oras para lang mag-breathe.",
+"Deserve ko ng magandang relasyon, romantic man o hindi.",
+"Deserve ko ng career na fulfilling.",
+"Deserve ko ng patience mula sa sarili ko.",
+"Deserve ko ng magandang tulog kada gabi.",
+"Deserve ko ng closure sa mga chapters na tapos na.",
+"Deserve ko ng abundance, hindi lang sapat lang.",
+"Deserve ko ng grace habang natututo ako.",
+"Deserve ko ng mga taong nagpapasaya sa akin.",
+"Deserve ko ng oras para gawin ang gusto ko.",
+"Deserve ko ng stability, financial man o emotional.",
+"Deserve ko ng buhay na hindi puro sakripisyo.",
+"Deserve ko ng ngiti kahit sa mahirap na araw.",
+"Deserve ko ng mga bagay na nagpapalago sa akin.",
+"Deserve ko ng self-love, hindi self-criticism.",
+"Deserve ko ng magandang bukas.",
+"Deserve ko ng oras para mag-heal.",
+"Deserve ko ng lahat ng pinaghihirapan ko.",
+"I'm proud kasi hindi ako sumuko kahit mahirap.",
+"I'm proud kasi tinuloy ko pa rin, kahit slow.",
+"I'm proud kasi natutunan kong mag-alaga sa sarili ko.",
+"I'm proud kasi lumaban ako para sa sarili ko.",
+"I'm proud kasi may ginagawa ako para sa future ko.",
+"I'm proud kasi hindi ko na kailangang maging perfect.",
+"I'm proud kasi natutunan kong mag-set ng boundaries.",
+"I'm proud kasi patuloy akong sumusubok.",
+"I'm proud kasi hindi ako sumusuko kahit mahirap ang buhay.",
+"I'm proud kasi naging honest ako sa sarili ko.",
+"I'm proud kasi natutunan kong tumigil kapag kailangan.",
+"I'm proud kasi lumago ako, kahit paano.",
+"I'm proud kasi hindi ako naging katulad ng dati.",
+"I'm proud kasi tinapos ko ang mga bagay na sinimulan ko.",
+"I'm proud kasi patuloy akong nagtitipid.",
+"I'm proud kasi hindi ako nag-give up sa sarili ko.",
+"I'm proud kasi ginagawa ko ang best ko araw-araw.",
+"I'm proud kasi natutunan kong magpahinga nang walang guilt.",
+"I'm proud kasi hinarap ko ang takot ko.",
+"I'm proud kasi hindi ako natatakot mag-simula ulit.",
+"I'm proud kasi respected ko ang sarili kong pace.",
+"I'm proud kasi hindi ako nagpadala sa comparison.",
+"I'm proud kasi tinanggap ko ang tulong na inalok sa akin.",
+"I'm proud kasi nakayanan ko ang mahirap na panahon.",
+"I'm proud kasi patuloy akong naniniwala sa sarili ko.",
+"I'm proud kasi ginawa ko ang tama, kahit mahirap.",
+"I'm proud kasi hindi ko na kailangang i-prove ang sarili ko sa lahat.",
+"I'm proud kasi mas kilala ko na ang sarili ko ngayon.",
+"I'm proud kasi natutunan kong i-appreciate ang sarili ko.",
+"I'm proud kasi buo pa rin ako kahit ano pa ang pinagdaanan ko.",
+"Okay lang na mabagal, basta hindi tumitigil.",
+"Okay lang na magkamali paminsan-minsan.",
+"Okay lang na magpahinga nang walang guilt.",
+"Okay lang na hindi lahat ng araw productive.",
+"Okay lang na humingi ng tulong.",
+"Okay lang na maiyak paminsan-minsan.",
+"Okay lang na hindi pa alam ang lahat ng sagot.",
+"Okay lang na iba ang bilis mo sa iba.",
+"Okay lang na baguhin ang isip mo.",
+"Okay lang na unahin ang sarili minsan.",
+"Okay lang na hindi laging positive ang vibe.",
+"Okay lang na magtanong kapag confused.",
+"Okay lang na mag-set ng limits.",
+"Okay lang na huminto muna, kahit sandali.",
+"Okay lang na hindi perfect ang plano.",
+"Okay lang na magpasalamat sa maliliit na bagay.",
+"Okay lang na mag-focus sa isang bagay muna.",
+"Okay lang na hindi kontento agad, basta consistent.",
+"Okay lang na sumubok ulit kahit nabigo dati.",
+"Okay lang na tumanggi kapag kailangan.",
+"Okay lang na malito paminsan-minsan.",
+"Okay lang na mag-take ng break.",
+"Okay lang na hindi sabay-sabay ang lahat ng plano.",
+"Okay lang na humiling ng suporta.",
+"Okay lang na maging vulnerable minsan.",
+"Okay lang na iba ang journey mo sa iba.",
+"Okay lang na dahan-dahan ang healing.",
+"Okay lang na hindi lahat kailangang ma-figure out ngayon.",
+"Okay lang na magbago ang direksyon.",
+"Okay lang na unahin ang mental health mo.",
+"Reminder: ikaw din ay deserve ng magandang buhay.",
+"Reminder: progress is progress, kahit maliit.",
+"Reminder: hindi ka nag-iisa sa laban na 'to.",
+"Reminder: okay lang huminga muna.",
+"Reminder: mahalaga ang ginagawa mo, kahit hindi mo pa nakikita.",
+"Reminder: hindi lahat kailangang perfect para maging maganda.",
+"Reminder: ikaw ang bida ng sarili mong kwento.",
+"Reminder: rest is productive too.",
+"Reminder: bawat piso na naiipon mo, proof ng disiplina mo.",
+"Reminder: kaya mo 'to, kahit hindi mo pa lubos na alam.",
+"Reminder: hindi mo kailangang i-rush ang healing mo.",
+"Reminder: proud ang past mo sa kung sino ka na ngayon.",
+"Reminder: hindi mo kailangang gawin lahat mag-isa.",
+"Reminder: bawat maliit na hakbang, patungo sa malaking goal.",
+"Reminder: worthy ka ng magandang bagay, kahit anong araw ngayon.",
+"Reminder: hindi ka laging kailangang may sagot.",
+"Reminder: normal lang ang magdoubt paminsan-minsan.",
+"Reminder: consistent beats perfect, palagi.",
+"Reminder: ang tipid mo ngayon, love letter sa future mo.",
+"Reminder: growing pa rin, and that's more than okay.",
+"Reminder: hindi ka defined ng mga pagkakamali mo.",
+"Reminder: allowed kang magpahinga.",
+"Reminder: hindi mo kailangang i-prove sa lahat ang worth mo.",
+"Reminder: may mga taong proud sa'yo, kahit hindi nila sinasabi.",
+"Reminder: okay lang na mag-iba ang bilis mo.",
+"Reminder: ang bawat araw, bagong chance para magsimula ulit.",
+"Reminder: hindi ka kailangang maging katulad ng iba.",
+"Reminder: your feelings are valid, kahit ano pa 'yan.",
+"Reminder: hindi mo kailangang magmadali sa buhay.",
+"Reminder: ikaw mismo ang unang taong dapat maniwala sa'yo.",
+"Grateful ako sa bawat araw na nabibigyan ako ng chance.",
+"Grateful ako sa mga leksyon na natutunan ko.",
+"Grateful ako sa lakas na meron pa rin ako.",
+"Grateful ako sa sarili kong hindi sumuko.",
+"Grateful ako sa mga taong sumusuporta sa akin.",
+"Grateful ako sa progress ko, kahit gaano kabagal.",
+"Grateful ako sa health na meron ako ngayon.",
+"Grateful ako sa mga oras na pwede kong pahingahin ang sarili ko.",
+"Grateful ako sa mga bagay na natutunan ko sa mga mistakes ko.",
+"Grateful ako sa journey ko, kahit mahirap.",
+"Grateful ako sa bawat piso na naiipon ko.",
+"Grateful ako sa growth na nakikita ko sa sarili ko.",
+"Grateful ako sa mga simpleng bagay sa buhay ko.",
+"Grateful ako sa lakas ng loob kong sumubok ulit.",
+"Grateful ako sa sarili kong hindi tumigil.",
+"Grateful ako sa mga bagong simula na binibigay ng buhay.",
+"Grateful ako sa peace na unti-unti kong natatagpuan.",
+"Grateful ako sa mga panahong nag-alala at nag-alaga ako sa sarili ko.",
+"Grateful ako sa oras na meron pa rin ako.",
+"Grateful ako sa lahat ng nangyari, maganda man o hindi.",
+"Grateful ako sa sarili kong patuloy na sumusubok.",
+"Grateful ako sa mga taong naniniwala sa akin.",
+"Grateful ako sa bawat maliit na tagumpay ko.",
+"Grateful ako sa sarili ko, kahit imperfect.",
+"Grateful ako sa katatagan na hindi ko akalain meron ako.",
+"Grateful ako sa mga bagay na natutunan ko about sa sarili ko.",
+"Grateful ako sa pagbabago sa buhay ko.",
+"Grateful ako sa mga bagong pagkakataon.",
+"Grateful ako sa oras na binibigay ko sa sarili ko.",
+"Grateful ako sa buhay na meron ako, ngayon mismo.",
+"Malaya akong pumili ng mas mabuting desisyon araw-araw.",
+"Malaya akong magbago ng direksyon kapag kailangan.",
+"Malaya akong sabihin ng \"hindi\" nang walang guilt.",
+"Malaya akong magpahinga kapag pagod na ako.",
+"Malaya akong magtakda ng sariling pace.",
+"Malaya akong lumayo sa mga bagay na nakakasira sa akin.",
+"Malaya akong magsimula ulit anumang oras.",
+"Malaya akong ipagpatuloy ang healing ko sa sarili kong bilis.",
+"Malaya akong ipahayag kung paano ako talaga nararamdaman.",
+"Malaya akong lumaban para sa mga gusto ko.",
+"Malaya akong bumuo ng buhay na akin talaga.",
+"Malaya akong tumigil kapag kailangan ko.",
+"Malaya akong maging honest sa sarili ko.",
+"Malaya akong sumubok nang hindi natatakot magkamali.",
+"Malaya akong pumili kung sino ang bibigyan ko ng oras.",
+"Malaya akong magpahalaga sa sarili kong journey.",
+"Malaya akong lumago sa sarili kong bilis.",
+"Malaya akong magtanong ng tulong.",
+"Malaya akong i-prioritize ang mental health ko.",
+"Malaya akong tumigil sa comparison sa iba.",
+"Malaya akong ituloy ang mga pangarap ko.",
+"Malaya akong baguhin ang paraan ng pag-iisip ko.",
+"Malaya akong maniwala sa sarili ko.",
+"Malaya akong ayusin ang buhay ko nang tahimik.",
+"Malaya akong maging kung sino talaga ako.",
+"Malaya akong pumili ng peace over drama.",
+"Malaya akong iwan ang mga bagay na hindi na akin.",
+"Malaya akong maging patient sa sarili kong proseso.",
+"Malaya akong magpasalamat sa bawat hakbang.",
+"Malaya akong tumingin sa future nang may pag-asa.",
+"Believe ako na may magandang nakalaan para sa akin.",
+"Believe ako na kaya kong ayusin ang buhay ko.",
+"Believe ako na tama ang timing ng lahat.",
+"Believe ako na lalago ako kahit paano.",
+"Believe ako na deserve ko ang magandang buhay.",
+"Believe ako na hindi ako nag-iisa sa laban na 'to.",
+"Believe ako na magbabago ang mga bagay para sa mas mabuti.",
+"Believe ako na kaya kong harapin ang kahit anong pagsubok.",
+"Believe ako na worthy ako ng pagmamahal.",
+"Believe ako na progress ko, sapat na.",
+"Believe ako na hindi ako defined ng past ko.",
+"Believe ako na may layunin ang lahat ng nangyayari.",
+"Believe ako na kaya kong tapusin ang mga plano ko.",
+"Believe ako na darating din ang tamang panahon.",
+"Believe ako na naiipon ang bawat maliit na sakripisyo ko.",
+"Believe ako na hindi masyadong huli para magbago.",
+"Believe ako na magiging okay ang lahat.",
+"Believe ako na mas malakas ako kaysa sa iniisip ko.",
+"Believe ako na kaya kong i-trust ang proseso.",
+"Believe ako na deserve ko ang kapayapaan.",
+"Believe ako na patuloy akong lumalago, kahit hindi ko nakikita.",
+"Believe ako na may nakalaan na maganda para sa akin.",
+"Believe ako na hindi ako kulang sa kahit ano.",
+"Believe ako na kaya kong i-heal ang sarili ko.",
+"Believe ako na may value ang bawat hakbang ko.",
+"Believe ako na magiging proud ako sa sarili ko balang araw.",
+"Believe ako na tama ang direksyon ko, kahit slow.",
+"Believe ako na deserve ko ang mga bagay na pinapangarap ko.",
+"Believe ako na hindi ako kailanman nag-iisa.",
+"Believe ako na kaya kong maging okay, isang araw sa isang pagkakataon.",
+"Every day, lumalapit ako sa bersyon ng sarili kong gusto ko maging.",
+"Every day, may chance akong magsimula ulit.",
+"Every day, lumalago ako kahit hindi ko namamalayan.",
+"Every day, may nadadagdag na lakas ako.",
+"Every day, choose ko ang sarili ko.",
+"Every day, lumalapit ako sa goals ko.",
+"Every day, natututo ako ng bago tungkol sa sarili ko.",
+"Every day, may dahilan akong magpasalamat.",
+"Every day, mas kilala ko ang sarili ko.",
+"Every day, lumalakas ang tiwala ko sa sarili ko.",
+"Every day, may progress kahit maliit.",
+"Every day, natututo akong magmahal sa sarili ko nang mas mabuti.",
+"Every day, mas malapit ako sa peace na hinahanap ko.",
+"Every day, may bagong pagkakataong bumuti.",
+"Every day, mas malakas ako kaysa kahapon.",
+"Every day, natututo akong tumigil kapag kailangan.",
+"Every day, choose ko ang healing over hurting.",
+"Every day, mas kumpiyansa ako sa desisyon ko.",
+"Every day, may space ako para sa growth.",
+"Every day, natutunan kong pahalagahan ang sarili ko.",
+"Every day, lumalayo ako sa mga bagay na hindi na akin.",
+"Every day, may bagong dahilan akong magpatuloy.",
+"Every day, unti-unting natatapos ang mga takot ko.",
+"Every day, mas malinaw ang direksyon ko.",
+"Every day, natututo akong maging patient sa sarili ko.",
+"Every day, mas gaan ang pakiramdam ko sa sarili ko.",
+"Every day, may bagong bersyon ako ng sarili ko.",
+"Every day, choose ko ang pag-asa kaysa takot.",
+"Every day, mas malapit ako sa buhay na gusto ko.",
+"Every day, may reason akong ipagpatuloy.",
+"Trust the process — hindi lahat kailangang mangyari ngayon.",
+"Trust the process — may layunin ang bawat hakbang.",
+"Trust the process — kahit mabagal, tuloy pa rin.",
+"Trust the process — hindi ka late, tama lang ang timing mo.",
+"Trust the process — lalago ka sa sarili mong bilis.",
+"Trust the process — kahit hindi mo pa nakikita, may nangyayari.",
+"Trust the process — bawat challenge, may aral.",
+"Trust the process — okay lang na malito paminsan-minsan.",
+"Trust the process — hindi lahat linear, at okay lang 'yon.",
+"Trust the process — may plano ang buhay para sa'yo.",
+"Trust the process — patuloy kang lumalago kahit hindi mo napapansin.",
+"Trust the process — hindi porket mabagal, hindi na gumagalaw.",
+"Trust the process — worth it 'yong hirap ngayon.",
+"Trust the process — kaya mong harapin ang susunod na chapter.",
+"Trust the process — nasa tamang direksyon ka.",
+"Trust the process — hindi mawawala ang effort mo.",
+"Trust the process — lahat 'to, parte ng journey mo.",
+"Trust the process — may magandang darating.",
+"Trust the process — hindi ka nag-iisa dito.",
+"Trust the process — kaya mo 'to, isang araw sa isang pagkakataon.",
+"Trust the process — mas malapit ka na kaysa sa iniisip mo.",
+"Trust the process — okay lang mag-doubt, basta huwag tumigil.",
+"Trust the process — patunay ang lahat ng hirap mo ngayon.",
+"Trust the process — may reason lahat ng nangyayari.",
+"Trust the process — magiging okay din lahat.",
+"Trust the process — mas magiging malinaw ang lahat, in time.",
+"Trust the process — hindi ka pababayaan ng effort mo.",
+"Trust the process — bawat hakbang, mahalaga.",
+"Trust the process — lumalapit ka sa sarili mong ideal.",
+"Trust the process — magiging worth it ang lahat ng 'to.",
+"Proud of myself for showing up, kahit mahirap.",
+"Proud of myself for not giving up sa sarili ko.",
+"Proud of myself for choosing rest kapag kailangan.",
+"Proud of myself for setting boundaries.",
+"Proud of myself for staying consistent.",
+"Proud of myself for asking for help.",
+"Proud of myself for saving even a little today.",
+"Proud of myself for trying again.",
+"Proud of myself for being honest sa sarili ko.",
+"Proud of myself for growing, kahit slow.",
+"Proud of myself for choosing myself today.",
+"Proud of myself for facing my fears.",
+"Proud of myself for healing at my own pace.",
+"Proud of myself for not comparing myself sa iba.",
+"Proud of myself for staying kind sa sarili ko.",
+"Proud of myself for making it this far.",
+"Proud of myself for believing in myself today.",
+"Proud of myself for taking care of my mental health.",
+"Proud of myself for being patient sa sarili ko.",
+"Proud of myself for finishing what I started.",
+"Proud of myself for choosing peace over chaos.",
+"Proud of myself for learning from my mistakes.",
+"Proud of myself for staying true to myself.",
+"Proud of myself for getting through today.",
+"Proud of myself for not quitting.",
+"Proud of myself for growing every single day.",
+"Proud of myself for taking small steps forward.",
+"Proud of myself for showing myself grace.",
+"Proud of myself for prioritizing myself.",
+"Proud of myself for believing na magiging okay ang lahat.",
+"Today, choose to be kind sa sarili ko.",
+"Today, choose to trust the process.",
+"Today, choose to rest without guilt.",
+"Today, choose to focus sa progress ko, hindi sa perfection.",
+"Today, choose to let go ng mga hindi ko na kaya.",
+"Today, choose to believe sa sarili ko.",
+"Today, choose to prioritize peace.",
+"Today, choose to celebrate small wins.",
+"Today, choose to be honest sa sarili ko.",
+"Today, choose to show up, kahit paano.",
+"Today, choose to be patient sa sarili ko.",
+"Today, choose to protect my energy.",
+"Today, choose to grow, kahit konti lang.",
+"Today, choose to forgive myself.",
+"Today, choose to move forward, isang hakbang lang.",
+"Today, choose to appreciate kung ano meron ako.",
+"Today, choose to speak kindly sa sarili ko.",
+"Today, choose to take it slow.",
+"Today, choose to believe na kaya ko 'to.",
+"Today, choose to set boundaries na kailangan ko.",
+"Today, choose to invest sa sarili ko.",
+"Today, choose to breathe through the hard parts.",
+"Today, choose to trust my own timing.",
+"Today, choose to be proud of how far I've come.",
+"Today, choose to keep going.",
+"Today, choose to embrace the uncertainty.",
+"Today, choose to be gentle sa sarili ko.",
+"Today, choose to focus on what I can control.",
+"Today, choose to show up for myself.",
+"Today, choose to hope for something better."
+];
 
-  const $ = (id) => document.getElementById(id);
-  const els = {
-    eyebrow: $('eyebrow'), greeting: $('greeting'), dateChip: $('dateChip'),
-    affirmationText: $('affirmationText'), refreshBtn: $('refreshBtn'),
-    dayCount: $('dayCount')
-  };
+const $ = (id) => document.getElementById(id);
+const els = {
+  eyebrow: $('eyebrow'), greeting: $('greeting'), dateChip: $('dateChip'),
+  affirmationText: $('affirmationText'), refreshBtn: $('refreshBtn'),
+  dayCount: $('dayCount')
+};
 
-  function setGreeting(){
-    const now = new Date();
-    const h = now.getHours();
-    els.eyebrow.textContent = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
-    els.greeting.textContent = h < 12 ? 'Simulan natin nang tama' : h < 18 ? 'Kumusta ang araw mo?' : 'Kamusta, tapos na ba ang araw mo?';
-    els.dateChip.textContent = now.toLocaleDateString('en-PH', {weekday:'short', month:'short', day:'numeric'});
-  }
+function setGreeting(){
+  const now = new Date();
+  const h = now.getHours();
+  els.eyebrow.textContent = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+  els.greeting.textContent = h < 12 ? 'Simulan natin nang tama' : h < 18 ? 'Kumusta ang araw mo?' : 'Kamusta, tapos na ba ang araw mo?';
+  els.dateChip.textContent = now.toLocaleDateString('en-PH', {weekday:'short', month:'short', day:'numeric'});
+}
 
-  function dailyIndex(){
-    const d = new Date();
-    const dayNum = Math.floor(d.getTime() / 86400000);
-    return dayNum % AFFIRMATIONS.length;
-  }
+function dailyIndex(){
+  const d = new Date();
+  const dayNum = Math.floor(d.getTime() / 86400000);
+  return dayNum % AFFIRMATIONS.length;
+}
 
-  function showAffirmation(text, animate){
-    if(animate){
-      els.affirmationText.classList.add('fade');
-      setTimeout(() => {
-        els.affirmationText.textContent = text;
-        els.affirmationText.classList.remove('fade');
-      }, 220);
-    } else {
+function showAffirmation(text, animate){
+  if(animate){
+    els.affirmationText.classList.add('fade');
+    setTimeout(() => {
       els.affirmationText.textContent = text;
-    }
+      els.affirmationText.classList.remove('fade');
+    }, 220);
+  } else {
+    els.affirmationText.textContent = text;
   }
+}
 
-  let currentIdx = dailyIndex();
+let currentIdx = dailyIndex();
 
-  function init(){
-    setGreeting();
-    showAffirmation(AFFIRMATIONS[currentIdx], false);
-  }
+function init(){
+  setGreeting();
+  showAffirmation(AFFIRMATIONS[currentIdx], false);
+}
 
-  els.refreshBtn.addEventListener('click', () => {
-    els.refreshBtn.classList.add('spin');
-    setTimeout(() => els.refreshBtn.classList.remove('spin'), 400);
-    let next;
-    do { next = Math.floor(Math.random() * AFFIRMATIONS.length); } while(next === currentIdx && AFFIRMATIONS.length > 1);
-    currentIdx = next;
-    showAffirmation(AFFIRMATIONS[next], true);
+els.refreshBtn.addEventListener('click', () => {
+  els.refreshBtn.classList.add('spin');
+  setTimeout(() => els.refreshBtn.classList.remove('spin'), 400);
+  let next;
+  do { next = Math.floor(Math.random() * AFFIRMATIONS.length); } while(next === currentIdx && AFFIRMATIONS.length > 1);
+  currentIdx = next;
+  showAffirmation(AFFIRMATIONS[next], true);
+});
+
+init();
+})();
+</script>
+
+<script>
+/* ---- Install App (Android) + service worker registration ---- */
+(function(){
+  let deferredPrompt = null;
+  const installBtn = document.getElementById('installBtn');
+  const iosHint = document.getElementById('iosInstallHint');
+
+  const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!isStandalone) installBtn.hidden = false;
   });
 
-  init();
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    installBtn.hidden = true;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBtn.hidden = true;
+    deferredPrompt = null;
+  });
+
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (isIOS && !isStandalone) iosHint.hidden = false;
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 })();
 </script>
 </body>
