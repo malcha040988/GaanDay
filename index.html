@@ -166,7 +166,53 @@ header{
 .install-btn:active{ transform:scale(0.96); }
 .install-btn:hover{ background:#f0c664; }
 .install-btn svg{ width:14px; height:14px; }
-.install-btn[hidden]{ display:none; }
+
+.install-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(15,38,32,0.72);
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:50;
+}
+.install-modal.show{ display:flex; }
+.install-modal-box{
+  background:var(--bg-card-hi);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:26px 22px;
+  max-width:340px;
+  text-align:center;
+}
+.install-modal-title{
+  font-family:'Fraunces', serif;
+  font-size:19px;
+  font-weight:600;
+  color:var(--cream);
+  margin:0 0 10px;
+}
+.install-modal-body{
+  font-family:'Manrope', sans-serif;
+  font-size:13.5px;
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 20px;
+}
+.install-modal-body b{ color:var(--cream); }
+.install-modal-close{
+  background:var(--gold);
+  border:1px solid var(--gold);
+  color:var(--bg-deep);
+  font-family:'Manrope', sans-serif;
+  font-weight:800;
+  font-size:13.5px;
+  padding:10px 22px;
+  border-radius:100px;
+  cursor:pointer;
+  width:100%;
+}
 .ios-hint{
   font-family:'Manrope', sans-serif;
   font-size:11.5px;
@@ -176,6 +222,7 @@ header{
   line-height:1.6;
 }
 .ios-hint b{ color:var(--cream); }
+.ios-hint[hidden]{ display:none; }
 .ios-hint[hidden]{ display:none; }
 
 footer{
@@ -208,13 +255,18 @@ footer b{ color:var(--cream); }
   <p class="streak" id="dayCount"></p>
 
   <div class="install-wrap">
-    <button class="install-btn" id="installBtn" hidden>
+    <button class="install-btn" id="installBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
       I-install ang App
     </button>
-    <p class="ios-hint" id="iosInstallHint" hidden>
-      Tap ang <b>Share</b> button sa Safari, tapos <b>Add to Home Screen</b>, para maging parang tunay na app ang GaanDay sa iPhone mo.
-    </p>
+  </div>
+
+  <div class="install-modal" id="installModal">
+    <div class="install-modal-box">
+      <p class="install-modal-title" id="installModalTitle">I-install ang GaanDay</p>
+      <p class="install-modal-body" id="installModalBody">Sandali lang...</p>
+      <button class="install-modal-close" id="installModalClose">Okay, got it</button>
+    </div>
   </div>
 </div>
 
@@ -637,48 +689,69 @@ init();
 </script>
 
 <script>
-/* ---- Install App (Android) + service worker registration ---- */
+/* ---- Install App button (laging visible, click handler ang bahala) ---- */
 (function(){
   let deferredPrompt = null;
   const installBtn = document.getElementById('installBtn');
-  const iosHint = document.getElementById('iosInstallHint');
+  const modal = document.getElementById('installModal');
+  const modalTitle = document.getElementById('installModalTitle');
+  const modalBody = document.getElementById('installModalBody');
+  const modalClose = document.getElementById('installModalClose');
 
   const isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
     window.navigator.standalone === true;
-
-  // Kung na-install na dati (naka-tag sa browser storage), wag nang ipakita
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
   const alreadyInstalled = localStorage.getItem('gaanday_installed') === 'true';
 
+  function openModal(title, body){
+    modalTitle.textContent = title;
+    modalBody.innerHTML = body;
+    modal.classList.add('show');
+  }
+  modalClose.addEventListener('click', () => modal.classList.remove('show'));
+
+  // Kapag na-detect ng Chrome/Android na installable na
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if (!isStandalone && !alreadyInstalled) installBtn.hidden = false;
   });
 
-  installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-
-    if (outcome === 'accepted') {
-      // Mawawala lang yung button kapag talagang na-install
-      installBtn.hidden = true;
-      localStorage.setItem('gaanday_installed', 'true');
-    }
-    // Kung "dismissed" (kina-cancel), manatili yung button para masubukan ulit
-  });
-
-  // Extra safety net: kapag na-detect ng browser na na-install na talaga
   window.addEventListener('appinstalled', () => {
-    installBtn.hidden = true;
     localStorage.setItem('gaanday_installed', 'true');
     deferredPrompt = null;
   });
 
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  if (isIOS && !isStandalone) iosHint.hidden = false;
+  installBtn.addEventListener('click', async () => {
+    // Case 1: naka-install na
+    if (isStandalone || alreadyInstalled) {
+      openModal('Naka-install ka na!', 'Nasa home screen mo na ang GaanDay. Buksan mo na lang mula roon.');
+      return;
+    }
+    // Case 2: ready na ang native Android install prompt
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (outcome === 'accepted') {
+        localStorage.setItem('gaanday_installed', 'true');
+      }
+      return;
+    }
+    // Case 3: iPhone/Safari — walang native prompt, manual lang
+    if (isIOS) {
+      openModal(
+        'I-install sa iPhone',
+        'Tap ang <b>Share</b> button sa ibaba ng Safari, tapos piliin ang <b>Add to Home Screen</b>.'
+      );
+      return;
+    }
+    // Case 4: Android pero hindi pa ready ang prompt (bagong bukas lang, o browser na hindi Chrome)
+    openModal(
+      'I-install ang App',
+      'Buksan ang menu ng browser mo (tatlong tuldok sa itaas-kanan), tapos piliin ang <b>Add to Home screen</b> o <b>Install app</b>.'
+    );
+  });
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
